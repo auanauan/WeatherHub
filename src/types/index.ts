@@ -1,0 +1,79 @@
+export interface Location {
+  id: string;
+  name: string;
+  lat: number;
+  lon: number;
+  timezone: string;
+  isTracking?: boolean;
+}
+
+export interface WeatherData {
+  time: string;
+  temperature: number;
+  humidity: number;
+  windSpeed: number;
+  precipitation: number;
+  weatherCode: number;
+}
+
+export interface DailySummary {
+  date: string;
+  tempMin: number;
+  tempMax: number;
+  rainTotal: number;
+  windMax: number;
+}
+
+export interface DailyForecast {
+  date: string;
+  tempMin: number;
+  tempMax: number;
+  weatherCode: number;
+  precipitationSum: number;
+  windSpeedMax: number;
+}
+
+export interface DailyForecastResponse {
+  latitude: number;
+  longitude: number;
+  timezone: string;
+  daily: {
+    time: string[];
+    temperature_2m_max: number[];
+    temperature_2m_min: number[];
+    weather_code: number[];
+    precipitation_sum: number[];
+    wind_speed_10m_max: number[];
+  };
+}
+
+export interface WeatherResponse {
+  latitude: number;
+  longitude: number;
+  timezone: string;
+  hourly: {
+    time: string[];
+    temperature_2m: number[];
+    relative_humidity_2m: number[];
+    wind_speed_10m: number[];
+    precipitation: number[];
+    weather_code: number[];
+  };
+}
+
+export type ThemeMode = 'light' | 'dark';
+
+export interface GeocodingResult {
+  place_id: number;
+  lat: string;
+  lon: string;
+  display_name: string;
+  name?: string;
+  address?: {
+    city?: string;
+    town?: string;
+    village?: string;
+    state?: string;
+    country?: string;
+  };
+}
