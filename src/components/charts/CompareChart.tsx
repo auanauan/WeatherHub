@@ -7,6 +7,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  Brush,
 } from 'recharts';
 import { useTheme as useStyledTheme } from 'styled-components';
 import styled from 'styled-components';
@@ -40,11 +41,12 @@ export const CompareChart = ({
 }: CompareChartProps) => {
   const theme = useStyledTheme();
 
-  // Merge data by date
+  // Merge data by date (store ISO date for correct sorting)
   const dateMap = new Map<string, any>();
 
   data1.forEach((item) => {
     dateMap.set(item.date, {
+      dateISO: item.date,
       date: formatDate(item.date, 'MM/dd'),
       [`${location1Name}_temp`]: Math.round(item.tempMax * 10) / 10,
       [`${location1Name}_rain`]: Math.round(item.rainTotal * 10) / 10,
@@ -58,6 +60,7 @@ export const CompareChart = ({
       existing[`${location2Name}_rain`] = Math.round(item.rainTotal * 10) / 10;
     } else {
       dateMap.set(item.date, {
+        dateISO: item.date,
         date: formatDate(item.date, 'MM/dd'),
         [`${location2Name}_temp`]: Math.round(item.tempMax * 10) / 10,
         [`${location2Name}_rain`]: Math.round(item.rainTotal * 10) / 10,
@@ -65,9 +68,9 @@ export const CompareChart = ({
     }
   });
 
-  const chartData = Array.from(dateMap.values()).sort((a, b) =>
-    a.date.localeCompare(b.date)
-  );
+  // Sort by ISO date to avoid issues with formatted strings (e.g. 1/2 vs 10/1)
+  const chartData = Array.from(dateMap.values())
+    .sort((a, b) => new Date(a.dateISO).getTime() - new Date(b.dateISO).getTime());
 
   return (
     <Card>
@@ -87,9 +90,20 @@ export const CompareChart = ({
               stroke={theme.colors.textSecondary}
               tick={{ fill: theme.colors.textSecondary, fontSize: 12 }}
             />
+            {/* Left Y for temperature */}
             <YAxis
+              yAxisId="temp"
               stroke={theme.colors.textSecondary}
               tick={{ fill: theme.colors.textSecondary, fontSize: 12 }}
+              domain={['dataMin - 5', 'dataMax + 5']}
+            />
+            {/* Right Y for rain */}
+            <YAxis
+              yAxisId="rain"
+              orientation="right"
+              stroke={theme.colors.textSecondary}
+              tick={{ fill: theme.colors.textSecondary, fontSize: 12 }}
+              domain={[0, 'dataMax + 5']}
             />
             <Tooltip content={<CustomChartTooltip />} />
             <Legend
@@ -97,7 +111,10 @@ export const CompareChart = ({
                 color: theme.colors.text,
               }}
             />
+
+            {/* Temperature lines (use temp Y axis) */}
             <Line
+              yAxisId="temp"
               type="monotone"
               dataKey={`${location1Name}_temp`}
               stroke={theme.colors.error}
@@ -110,6 +127,7 @@ export const CompareChart = ({
               name={`${location1Name} Temp (°C)`}
             />
             <Line
+              yAxisId="temp"
               type="monotone"
               dataKey={`${location2Name}_temp`}
               stroke={theme.colors.info}
@@ -121,6 +139,35 @@ export const CompareChart = ({
               animationEasing="ease-in-out"
               name={`${location2Name} Temp (°C)`}
             />
+
+            {/* Rain lines (use rain Y axis, dashed) */}
+            <Line
+              yAxisId="rain"
+              type="monotone"
+              dataKey={`${location1Name}_rain`}
+              stroke={theme.colors.primary || theme.colors.info}
+              strokeWidth={2}
+              dot={false}
+              strokeDasharray="4 2"
+              name={`${location1Name} Rain (mm)`}
+              animationBegin={400}
+              animationDuration={1200}
+            />
+            <Line
+              yAxisId="rain"
+              type="monotone"
+              dataKey={`${location2Name}_rain`}
+              stroke={theme.colors.success || theme.colors.info}
+              strokeWidth={2}
+              dot={false}
+              strokeDasharray="4 2"
+              name={`${location2Name} Rain (mm)`}
+              animationBegin={600}
+              animationDuration={1200}
+            />
+
+            {/* Brush to select range */}
+            <Brush dataKey="date" height={24} stroke={theme.colors.border} />
           </LineChart>
         </ResponsiveContainer>
       </ChartContainer>

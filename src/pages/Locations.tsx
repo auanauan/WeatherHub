@@ -8,7 +8,6 @@ import { LocationMap } from '@/components/map/LocationMap';
 import { LocationSearch } from '@/components/common/LocationSearch';
 import { EmptyState } from '@/components/common/ErrorMessage';
 import { PageTransition } from '@/components/common/PageTransition';
-import { FadeInStagger, FadeInStaggerItem } from '@/components/common/FadeIn';
 import { getLocationName, getTimezoneFromCoords } from '@/services/geocoding';
 import { toast, showDeleteConfirm } from '@/utils/alert';
 import type { GeocodingResult } from '@/types';

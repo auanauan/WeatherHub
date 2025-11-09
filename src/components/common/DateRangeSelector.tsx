@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Select, FormGroup, Label } from './Input';
-import { getLastNDays, getDaysAgo, getToday } from '@/utils/date';
+import { getLastNDays, getToday } from '@/utils/date';
 
 const Container = styled.div`
   display: flex;
