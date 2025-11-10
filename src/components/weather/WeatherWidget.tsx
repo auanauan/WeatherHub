@@ -11,18 +11,13 @@ interface WeatherWidgetProps {
 }
 
 const WidgetContainer = styled(motion.div)`
-  background: ${({ theme }) =>
-    theme.name === 'dark'
-      ? 'rgba(30, 41, 59, 0.6)'
-      : 'rgba(255, 255, 255, 0.7)'};
-  backdrop-filter: blur(10px);
+  background: ${({ theme }) => theme.glass.background};
+  backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  -webkit-backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   padding: ${({ theme }) => theme.spacing.lg};
-  border: 1px solid ${({ theme }) =>
-    theme.name === 'dark'
-      ? 'rgba(255, 255, 255, 0.1)'
-      : 'rgba(0, 0, 0, 0.05)'};
-  box-shadow: 0 4px 6px ${({ theme }) => theme.colors.shadow};
+  border: ${({ theme }) => theme.glass.border};
+  box-shadow: ${({ theme }) => theme.glass.shadow};
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;

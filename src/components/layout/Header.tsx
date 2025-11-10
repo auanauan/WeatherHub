@@ -5,13 +5,14 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { LanguageSwitcher } from '@/components/common/LanguageSwitcher';
 
 const HeaderContainer = styled.header`
-  background-color: ${({ theme }) => theme.colors.surface};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+  background: ${({ theme }) => theme.glass.background};
+  backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  -webkit-backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  border-bottom: ${({ theme }) => theme.glass.border};
   padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 1000;
-  box-shadow: 0 2px 4px ${({ theme }) => theme.colors.shadow};
+  box-shadow: ${({ theme }) => theme.glass.shadow};
 `;
 
 const Nav = styled.nav`

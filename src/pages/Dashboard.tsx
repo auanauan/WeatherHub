@@ -11,6 +11,11 @@ import { InsightsCard } from '@/components/weather/InsightsCard';
 import { TrendIndicator } from '@/components/weather/TrendIndicator';
 import { UVIndexWidget } from '@/components/weather/UVIndexWidget';
 import { SunriseSunsetWidget } from '@/components/weather/SunriseSunsetWidget';
+import { WindWidget } from '@/components/weather/WindWidget';
+import { RainfallWidget } from '@/components/weather/RainfallWidget';
+import { PressureWidget } from '@/components/weather/PressureWidget';
+import { VisibilityWidget } from '@/components/weather/VisibilityWidget';
+import { FeelsLikeWidget } from '@/components/weather/FeelsLikeWidget';
 import { HourlyChart } from '@/components/charts/HourlyChart';
 import { DailyChart } from '@/components/charts/DailyChart';
 import { ChartSkeleton } from '@/components/common/ChartSkeleton';
@@ -243,6 +248,13 @@ export const Dashboard = () => {
               sunrise={latest.sunrise.split('T')[1] || latest.sunrise}
               sunset={latest.sunset.split('T')[1] || latest.sunset}
             />
+          )}
+          <WindWidget speed={latest.windSpeed} direction={latest.windDirection} />
+          <RainfallWidget amount={latest.precipitation} label="Current" />
+          {latest.pressure && <PressureWidget pressure={latest.pressure} />}
+          {latest.visibility && <VisibilityWidget visibility={latest.visibility} />}
+          {latest.apparentTemperature && (
+            <FeelsLikeWidget feelsLike={latest.apparentTemperature} actual={latest.temperature} />
           )}
         </WidgetsGrid>
       )}

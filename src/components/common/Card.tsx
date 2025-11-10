@@ -1,15 +1,19 @@
 import styled from 'styled-components';
 
 export const Card = styled.div`
-  background-color: ${({ theme }) => theme.colors.surface};
+  background: ${({ theme }) => theme.glass.background};
+  backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  -webkit-backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  border: ${({ theme }) => theme.glass.border};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   padding: ${({ theme }) => theme.spacing.lg};
-  box-shadow: 0 1px 3px ${({ theme }) => theme.colors.shadow};
+  box-shadow: ${({ theme }) => theme.glass.shadow};
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
-    box-shadow: 0 4px 12px ${({ theme }) => theme.colors.shadow};
     transform: translateY(-2px);
+    box-shadow: 0 12px 40px 0 ${({ theme }) => theme.colors.shadow};
+    background: ${({ theme }) => theme.colors.surfaceHover};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {

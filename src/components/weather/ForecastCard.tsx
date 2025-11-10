@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import { getWeatherDescription } from '@/utils/weatherCodes';
-import { AnimatedWeatherIcon } from './AnimatedWeatherIcon';
+import { Weather3DIcon } from './Weather3DIcon';
 import type { DailyForecast } from '@/types';
 
 const Card = styled.div`
-  background-color: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.border};
+  background: ${({ theme }) => theme.glass.background};
+  backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  -webkit-backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  border: ${({ theme }) => theme.glass.border};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   padding: ${({ theme }) => theme.spacing.lg};
   display: flex;
@@ -14,11 +16,13 @@ const Card = styled.div`
   gap: ${({ theme }) => theme.spacing.sm};
   transition: all 0.2s ease;
   min-width: 140px;
+  box-shadow: ${({ theme }) => theme.glass.shadow};
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 12px 40px 0 ${({ theme }) => theme.colors.shadow};
     border-color: ${({ theme }) => theme.colors.primary};
+    background: ${({ theme }) => theme.colors.surfaceHover};
   }
 `;
 
@@ -133,7 +137,7 @@ export const ForecastCard = ({ forecast }: ForecastCardProps) => {
       <DateLabel>{date}</DateLabel>
 
       <WeatherIconContainer>
-        <AnimatedWeatherIcon weatherCode={forecast.weatherCode} size={64} />
+        <Weather3DIcon weatherCode={forecast.weatherCode} size={64} />
       </WeatherIconContainer>
       <Condition>{getWeatherDescription(forecast.weatherCode)}</Condition>
 

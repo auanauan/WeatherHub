@@ -19,18 +19,21 @@ const InsightItem = styled(motion.div)<InsightItemProps>`
   display: flex;
   gap: ${({ theme }) => theme.spacing.md};
   padding: ${({ theme }) => theme.spacing.md};
-  background-color: ${({ theme, $type }) => {
+  background: ${({ theme, $type }) => {
+    const baseColor = theme.glass.background;
     switch ($type) {
       case 'warning':
-        return theme.colors.warning + '15';
+        return `linear-gradient(135deg, ${baseColor}, ${theme.colors.warning}15)`;
       case 'success':
-        return theme.colors.success + '15';
+        return `linear-gradient(135deg, ${baseColor}, ${theme.colors.success}15)`;
       case 'tip':
-        return theme.colors.info + '15';
+        return `linear-gradient(135deg, ${baseColor}, ${theme.colors.info}15)`;
       default:
-        return theme.colors.backgroundSecondary;
+        return baseColor;
     }
   }};
+  backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  -webkit-backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
   border-left: 4px solid ${({ theme, $type }) => {
     switch ($type) {
       case 'warning':
@@ -47,6 +50,7 @@ const InsightItem = styled(motion.div)<InsightItemProps>`
   cursor: pointer;
   overflow: hidden;
   position: relative;
+  box-shadow: ${({ theme }) => theme.glass.shadow};
 
   /* Pulse animation for warnings */
   ${({ $type }) =>

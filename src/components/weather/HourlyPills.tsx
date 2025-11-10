@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import type { WeatherData } from '@/types';
-import { getWeatherIcon } from '@/utils/weatherCodes';
+import { Weather3DIcon } from './Weather3DIcon';
 
 interface HourlyPillsProps {
   data: WeatherData[];
@@ -65,19 +65,18 @@ const Pill = styled(motion.div)<{ $isNow?: boolean }>`
     $isNow
       ? theme.name === 'dark'
         ? 'linear-gradient(180deg, #7c3aed 0%, #6d28d9 100%)'
-        : 'linear-gradient(180deg, #8b5cf6 0%, #7c3aed 100%)'
-      : theme.name === 'dark'
-        ? 'rgba(167, 139, 250, 0.1)'
-        : 'rgba(255, 255, 255, 0.6)'};
-  backdrop-filter: blur(10px);
-  border: 1px solid ${({ theme, $isNow }) =>
+        : 'linear-gradient(180deg, #7c3aed 0%, #6d28d9 100%)'
+      : theme.glass.background};
+  backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  -webkit-backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  border: ${({ theme, $isNow }) =>
     $isNow
-      ? 'rgba(167, 139, 250, 0.3)'
-      : theme.colors.border};
-  box-shadow: ${({ $isNow }) =>
+      ? '1px solid rgba(167, 139, 250, 0.4)'
+      : theme.glass.border};
+  box-shadow: ${({ theme, $isNow }) =>
     $isNow
-      ? '0 8px 16px rgba(124, 58, 237, 0.3)'
-      : '0 4px 6px rgba(0, 0, 0, 0.05)'};
+      ? '0 8px 24px rgba(124, 58, 237, 0.4)'
+      : theme.glass.shadow};
   transition: all 0.3s ease;
   cursor: pointer;
 
@@ -85,8 +84,14 @@ const Pill = styled(motion.div)<{ $isNow?: boolean }>`
     transform: translateY(-4px);
     box-shadow: ${({ $isNow }) =>
       $isNow
-        ? '0 12px 24px rgba(124, 58, 237, 0.4)'
-        : '0 8px 12px rgba(0, 0, 0, 0.1)'};
+        ? '0 12px 32px rgba(124, 58, 237, 0.5)'
+        : '0 12px 24px rgba(124, 58, 237, 0.2)'};
+    background: ${({ theme, $isNow }) =>
+      $isNow
+        ? theme.name === 'dark'
+          ? 'linear-gradient(180deg, #8b5cf6 0%, #7c3aed 100%)'
+          : 'linear-gradient(180deg, #8b5cf6 0%, #7c3aed 100%)'
+        : theme.colors.surfaceHover};
   }
 `;
 
@@ -109,9 +114,11 @@ const NowBadge = styled.div`
 `;
 
 const IconWrapper = styled.div`
-  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: ${({ theme }) => theme.spacing.xs} 0;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  min-height: 60px;
 `;
 
 const Temperature = styled.div<{ $isNow?: boolean }>`
@@ -166,7 +173,7 @@ export const HourlyPills = ({ data, title = 'Hourly Forecast' }: HourlyPillsProp
                   <Time $isNow={isNow}>{formatTime(item.time)}</Time>
                 )}
                 <IconWrapper>
-                  {getWeatherIcon(item.weatherCode)}
+                  <Weather3DIcon weatherCode={item.weatherCode} size={50} />
                 </IconWrapper>
                 <Temperature $isNow={isNow}>
                   {Math.round(item.temperature)}°

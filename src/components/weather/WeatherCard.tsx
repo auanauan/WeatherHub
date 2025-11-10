@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import { Card, CardTitle, CardHeader } from '@/components/common/Card';
 import { getWeatherDescription } from '@/utils/weatherCodes';
 import { formatDateTime } from '@/utils/date';
-import { AnimatedWeatherIcon } from './AnimatedWeatherIcon';
+import { Weather3DIcon } from './Weather3DIcon';
+import { HeroIllustration } from './HeroIllustration';
 import type { WeatherData } from '@/types';
 
 const WeatherGrid = styled.div`
@@ -22,12 +23,28 @@ const MainWeather = styled.div`
   padding: ${({ theme }) => theme.spacing.xl} 0;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
   margin-bottom: ${({ theme }) => theme.spacing.lg};
+  position: relative;
+  overflow: hidden;
+`;
+
+const HeroSection = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: ${({ theme }) => theme.spacing.xl};
+  align-items: center;
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing.md};
+  }
 `;
 
 const WeatherIconContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: ${({ theme }) => theme.spacing.md};
+  align-items: center;
+  min-height: 300px;
 `;
 
 const Temperature = styled.div`
@@ -53,13 +70,17 @@ const WeatherStat = styled.div`
   flex-direction: column;
   align-items: center;
   padding: ${({ theme }) => theme.spacing.md};
-  background-color: ${({ theme }) => theme.colors.backgroundSecondary};
+  background: ${({ theme }) => theme.glass.background};
+  backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  -webkit-backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  border: ${({ theme }) => theme.glass.border};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   transition: all 0.2s ease;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.surfaceHover};
+    background: ${({ theme }) => theme.colors.surfaceHover};
     transform: translateY(-2px);
+    box-shadow: 0 8px 24px 0 ${({ theme }) => theme.colors.shadow};
   }
 `;
 
@@ -93,9 +114,12 @@ export const WeatherCard = ({ data, locationName }: WeatherCardProps) => {
       </CardHeader>
 
       <MainWeather>
-        <WeatherIconContainer>
-          <AnimatedWeatherIcon weatherCode={data.weatherCode} size={120} />
-        </WeatherIconContainer>
+        <HeroSection>
+          <WeatherIconContainer>
+            <Weather3DIcon weatherCode={data.weatherCode} size={140} />
+          </WeatherIconContainer>
+          <HeroIllustration />
+        </HeroSection>
         <Temperature>{Math.round(data.temperature)}°C</Temperature>
         <Condition>{getWeatherDescription(data.weatherCode)}</Condition>
         <Timestamp>Last updated: {formatDateTime(data.time)}</Timestamp>

@@ -2,33 +2,36 @@ import styled from 'styled-components';
 import { TooltipProps } from 'recharts';
 
 const TooltipContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors.surface};
-  border: 2px solid ${({ theme }) => theme.colors.border};
+  background: ${({ theme }) => theme.glass.background};
+  backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  -webkit-backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  border: ${({ theme }) => theme.glass.border};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   padding: ${({ theme }) => theme.spacing.md};
-  box-shadow: 0 8px 24px ${({ theme }) => theme.colors.shadow};
-  min-width: 180px;
-  animation: fadeIn 0.2s ease-in-out;
+  box-shadow: ${({ theme }) => theme.glass.shadow};
+  min-width: 200px;
+  animation: fadeInScale 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
-  @keyframes fadeIn {
+  @keyframes fadeInScale {
     from {
       opacity: 0;
-      transform: translateY(-8px);
+      transform: translateY(-10px) scale(0.95);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
   }
 `;
 
 const TooltipLabel = styled.div`
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 700;
   color: ${({ theme }) => theme.colors.text};
   margin-bottom: ${({ theme }) => theme.spacing.sm};
-  padding-bottom: ${({ theme }) => theme.spacing.xs};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+  padding-bottom: ${({ theme }) => theme.spacing.sm};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
+  letter-spacing: 0.3px;
 `;
 
 const TooltipItem = styled.div`
@@ -55,11 +58,13 @@ const ItemValue = styled.span`
 
 const ColorDot = styled.span<{ color: string }>`
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background-color: ${({ color }) => color};
-  box-shadow: 0 0 4px ${({ color }) => color};
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.8),
+    0 0 6px ${({ color }) => color}60;
 `;
 
 interface CustomTooltipProps extends TooltipProps<number, string> {

@@ -17,10 +17,10 @@ const TimeBlock = styled.div`
   flex: 1;
   text-align: center;
   padding: ${({ theme }) => theme.spacing.sm};
-  background: ${({ theme }) =>
-    theme.name === 'dark'
-      ? 'rgba(255, 255, 255, 0.05)'
-      : 'rgba(0, 0, 0, 0.03)'};
+  background: ${({ theme }) => theme.glass.background};
+  backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  -webkit-backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  border: ${({ theme }) => theme.glass.border};
   border-radius: ${({ theme }) => theme.borderRadius.md};
 `;
 
@@ -47,10 +47,10 @@ const SunPath = styled.div`
   margin-top: ${({ theme }) => theme.spacing.md};
   height: 60px;
   position: relative;
-  background: ${({ theme }) =>
-    theme.name === 'dark'
-      ? 'rgba(255, 255, 255, 0.05)'
-      : 'rgba(0, 0, 0, 0.03)'};
+  background: ${({ theme }) => theme.glass.background};
+  backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  -webkit-backdrop-filter: ${({ theme }) => theme.glass.backdropBlur};
+  border: ${({ theme }) => theme.glass.border};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   overflow: hidden;
 `;
