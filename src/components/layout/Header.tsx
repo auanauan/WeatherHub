@@ -1,6 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useTranslation } from '@/hooks/useTranslation';
+import { LanguageSwitcher } from '@/components/common/LanguageSwitcher';
 
 const HeaderContainer = styled.header`
   background-color: ${({ theme }) => theme.colors.surface};
@@ -86,6 +88,7 @@ const ThemeToggle = styled.button`
 export const Header = () => {
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <HeaderContainer>
@@ -96,17 +99,18 @@ export const Header = () => {
 
         <NavLinks>
           <NavLink to="/" $active={location.pathname === '/'}>
-            Dashboard
+            {t.nav.dashboard}
           </NavLink>
           <NavLink to="/locations" $active={location.pathname === '/locations'}>
-            Locations
+            {t.nav.locations}
           </NavLink>
           <NavLink to="/compare" $active={location.pathname === '/compare'}>
-            Compare
+            {t.nav.compare}
           </NavLink>
         </NavLinks>
 
         <Actions>
+          <LanguageSwitcher />
           <ThemeToggle onClick={toggleTheme} title="Toggle theme">
             {theme === 'light' ? '🌙' : '☀️'}
           </ThemeToggle>

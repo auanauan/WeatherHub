@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useLocations } from '@/contexts/LocationContext';
+import { useTranslation } from '@/hooks/useTranslation';
 import { Card, CardTitle, CardHeader, CardContent } from '@/components/common/Card';
 import { Button } from '@/components/common/Button';
 import { Input, Label, FormGroup } from '@/components/common/Input';
@@ -96,6 +97,7 @@ const MapInstruction = styled.p`
 
 export const Locations = () => {
   const { locations, addLocation, removeLocation } = useLocations();
+  const { t, translate } = useTranslation();
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -115,16 +117,16 @@ export const Locations = () => {
       timezone: formData.timezone,
     });
 
-    toast.success(`Location "${formData.name}" added successfully!`);
+    toast.success(t.locations.addSuccess);
     setFormData({ name: '', lat: '', lon: '', timezone: 'Asia/Bangkok' });
     setShowForm(false);
   };
 
   const handleRemove = async (id: string, name: string) => {
-    const confirmed = await showDeleteConfirm(name);
+    const confirmed = await showDeleteConfirm(name, t.locations.deleteConfirm);
     if (confirmed) {
       removeLocation(id);
-      toast.success(`Location "${name}" removed successfully!`);
+      toast.success(t.locations.deleteSuccess);
     }
   };
 
@@ -154,14 +156,14 @@ export const Locations = () => {
     <PageTransition>
       <LocationsContainer>
       <div>
-        <PageTitle>Manage Locations</PageTitle>
+        <PageTitle>{t.locations.title}</PageTitle>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Add New Location</CardTitle>
+          <CardTitle>{t.locations.addLocation}</CardTitle>
           <Button onClick={() => setShowForm(!showForm)} size="sm">
-            {showForm ? 'Cancel' : '+ Add Location'}
+            {showForm ? t.common.cancel : `+ ${t.locations.addLocation}`}
           </Button>
         </CardHeader>
 
@@ -170,12 +172,12 @@ export const Locations = () => {
             <AddLocationForm onSubmit={handleSubmit}>
               <LocationSearch
                 onLocationSelect={handleLocationSelect}
-                placeholder="Search for a city (e.g., Bangkok, New York, Tokyo)"
-                label="Search Location"
+                placeholder={t.locations.searchPlaceholder}
+                label={t.common.search}
               />
 
               <MapInstruction>
-                💡 Or click on the map to select coordinates manually
+                💡 {t.locations.selectFromMap}
               </MapInstruction>
               <LocationMap
                 markers={locations.map((loc) => ({
@@ -187,7 +189,7 @@ export const Locations = () => {
               />
 
               <FormGroup>
-                <Label>Location Name</Label>
+                <Label>{t.locations.addLocation}</Label>
                 <Input
                   type="text"
                   placeholder="e.g., Bangkok"
@@ -243,7 +245,7 @@ export const Locations = () => {
               </FormGroup>
 
               <Button type="submit" fullWidth>
-                Add Location
+                {t.locations.addLocation}
               </Button>
             </AddLocationForm>
           </CardContent>
@@ -252,19 +254,19 @@ export const Locations = () => {
 
       {locations.length === 0 ? (
         <EmptyState
-          message="No locations added yet. Click 'Add Location' to get started!"
+          message={t.dashboard.noLocations}
           icon="🌍"
         />
       ) : (
         <>
-          <CardTitle>Your Locations ({locations.length})</CardTitle>
+          <CardTitle>{translate(t.locations.title, {})} ({locations.length})</CardTitle>
           <Grid>
             {locations.map((location) => (
               <LocationCard key={location.id}>
                 <LocationInfo>
                   <LocationName>{location.name}</LocationName>
                   <LocationDetail>
-                    📍 Lat: {location.lat.toFixed(4)}, Lon: {location.lon.toFixed(4)}
+                    📍 {t.locations.coordinates}: {location.lat.toFixed(4)}, {location.lon.toFixed(4)}
                   </LocationDetail>
                   <LocationDetail>🕒 {location.timezone}</LocationDetail>
                 </LocationInfo>
@@ -274,7 +276,7 @@ export const Locations = () => {
                     size="sm"
                     onClick={() => handleRemove(location.id, location.name)}
                   >
-                    Remove
+                    {t.common.delete}
                   </Button>
                 </Actions>
               </LocationCard>

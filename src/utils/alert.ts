@@ -79,10 +79,13 @@ export const showConfirm = async (
   return result.isConfirmed;
 };
 
-export const showDeleteConfirm = async (itemName: string): Promise<boolean> => {
+export const showDeleteConfirm = async (
+  itemName: string,
+  customMessage?: string
+): Promise<boolean> => {
   return showConfirm(
     'Are you sure?',
-    `Do you want to delete "${itemName}"? This action cannot be undone.`,
+    customMessage || `Do you want to delete "${itemName}"? This action cannot be undone.`,
     'Yes, delete it',
     'Cancel'
   );

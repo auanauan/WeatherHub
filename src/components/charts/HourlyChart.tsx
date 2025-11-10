@@ -74,8 +74,8 @@ export const HourlyChart = ({ data, title = 'Hourly Weather' }: HourlyChartProps
               dataKey="temperature"
               stroke={theme.colors.error}
               strokeWidth={2}
-              dot={{ r: 3, strokeWidth: 0 }}
-              activeDot={{ r: 6, strokeWidth: 2, stroke: theme.colors.error }}
+              dot={{ r: 3, strokeWidth: 0, fill: theme.colors.error }}
+              activeDot={{ r: 6, strokeWidth: 2, stroke: theme.colors.error, fill: theme.colors.error }}
               animationBegin={0}
               animationDuration={1500}
               animationEasing="ease-in-out"
@@ -86,8 +86,8 @@ export const HourlyChart = ({ data, title = 'Hourly Weather' }: HourlyChartProps
               dataKey="humidity"
               stroke={theme.colors.info}
               strokeWidth={2}
-              dot={{ r: 3, strokeWidth: 0 }}
-              activeDot={{ r: 6, strokeWidth: 2, stroke: theme.colors.info }}
+              dot={{ r: 3, strokeWidth: 0, fill: theme.colors.info }}
+              activeDot={{ r: 6, strokeWidth: 2, stroke: theme.colors.info, fill: theme.colors.info }}
               animationBegin={200}
               animationDuration={1500}
               animationEasing="ease-in-out"

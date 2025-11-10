@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useTranslation } from '@/hooks/useTranslation';
 import { Select, FormGroup, Label } from './Input';
 import { getLastNDays, getToday } from '@/utils/date';
 
@@ -32,22 +33,25 @@ interface DateRangeSelectorProps {
   onChange: (range: DateRange) => void;
 }
 
-const PRESET_RANGES = [
-  { value: '3', label: 'Last 3 Days' },
-  { value: '7', label: 'Last 7 Days' },
-  { value: '14', label: 'Last 14 Days' },
-  { value: '30', label: 'Last 30 Days' },
-  { value: '60', label: 'Last 60 Days' },
-  { value: '90', label: 'Last 90 Days' },
-];
-
 export const DateRangeSelector = ({ value, onChange }: DateRangeSelectorProps) => {
+  const { t, translate } = useTranslation();
+
+  const PRESET_RANGES = [
+    { value: '3', label: translate(t.dateRange.lastDays, { days: '3' }) },
+    { value: '7', label: t.dateRange.last7Days },
+    { value: '14', label: t.dateRange.last14Days },
+    { value: '30', label: t.dateRange.last30Days },
+    { value: '60', label: translate(t.dateRange.lastDays, { days: '60' }) },
+    { value: '90', label: translate(t.dateRange.lastDays, { days: '90' }) },
+  ];
+
   const handlePresetChange = (days: string) => {
     const range = getLastNDays(parseInt(days));
+    const preset = PRESET_RANGES.find((r) => r.value === days);
     onChange({
       start: range.start,
       end: range.end,
-      label: PRESET_RANGES.find((r) => r.value === days)?.label || `Last ${days} Days`,
+      label: preset?.label || translate(t.dateRange.lastDays, { days }),
     });
   };
 
@@ -69,7 +73,7 @@ export const DateRangeSelector = ({ value, onChange }: DateRangeSelectorProps) =
   return (
     <Container>
       <SelectGroup>
-        <Label>Date Range</Label>
+        <Label>{t.dateRange.customRange}</Label>
         <Select
           value={getCurrentPreset()}
           onChange={(e) => handlePresetChange(e.target.value)}

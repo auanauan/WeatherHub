@@ -91,6 +91,7 @@ export async function getWeatherData(
     latitude: lat.toString(),
     longitude: lon.toString(),
     hourly: 'temperature_2m,relative_humidity_2m,wind_speed_10m,precipitation,weather_code',
+    daily: 'uv_index_max,sunrise,sunset',
     timezone: 'auto',
   });
 
@@ -102,14 +103,34 @@ export async function getWeatherData(
       `${OPEN_METEO_BASE_URL}/forecast?${params}`
     );
 
-    const weatherData: WeatherData[] = data.hourly.time.map((time, index) => ({
-      time,
-      temperature: data.hourly.temperature_2m[index],
-      humidity: data.hourly.relative_humidity_2m[index],
-      windSpeed: data.hourly.wind_speed_10m[index],
-      precipitation: data.hourly.precipitation[index],
-      weatherCode: data.hourly.weather_code[index],
-    }));
+    // Create a map of daily data for quick lookup
+    const dailyDataMap = new Map<string, { uvIndex?: number; sunrise?: string; sunset?: string }>();
+    if (data.daily) {
+      data.daily.time.forEach((date, index) => {
+        dailyDataMap.set(date, {
+          uvIndex: data.daily?.uv_index_max?.[index],
+          sunrise: data.daily?.sunrise?.[index],
+          sunset: data.daily?.sunset?.[index],
+        });
+      });
+    }
+
+    const weatherData: WeatherData[] = data.hourly.time.map((time, index) => {
+      const date = time.split('T')[0];
+      const dailyData = dailyDataMap.get(date);
+
+      return {
+        time,
+        temperature: data.hourly.temperature_2m[index],
+        humidity: data.hourly.relative_humidity_2m[index],
+        windSpeed: data.hourly.wind_speed_10m[index],
+        precipitation: data.hourly.precipitation[index],
+        weatherCode: data.hourly.weather_code[index],
+        uvIndex: dailyData?.uvIndex,
+        sunrise: dailyData?.sunrise,
+        sunset: dailyData?.sunset,
+      };
+    });
 
     cache.set(cacheKey, weatherData);
     return weatherData;

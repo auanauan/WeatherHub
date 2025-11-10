@@ -14,6 +14,9 @@ export interface WeatherData {
   windSpeed: number;
   precipitation: number;
   weatherCode: number;
+  uvIndex?: number;
+  sunrise?: string;
+  sunset?: string;
 }
 
 export interface DailySummary {
@@ -58,6 +61,12 @@ export interface WeatherResponse {
     wind_speed_10m: number[];
     precipitation: number[];
     weather_code: number[];
+  };
+  daily?: {
+    time: string[];
+    uv_index_max?: number[];
+    sunrise?: string[];
+    sunset?: string[];
   };
 }
 

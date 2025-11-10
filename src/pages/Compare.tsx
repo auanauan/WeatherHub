@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useLocations } from '@/contexts/LocationContext';
+import { useTranslation } from '@/hooks/useTranslation';
 import { useDailySummary } from '@/hooks/useWeather';
 import { CompareChart } from '@/components/charts/CompareChart';
 import { Select, FormGroup, Label } from '@/components/common/Input';
@@ -59,6 +60,7 @@ const ChartActions = styled.div`
 
 export const Compare = () => {
   const { locations } = useLocations();
+  const { t } = useTranslation();
   const [location1Id, setLocation1Id] = useState<string>('');
   const [location2Id, setLocation2Id] = useState<string>('');
   const [showComparison, setShowComparison] = useState(false);
@@ -92,7 +94,7 @@ export const Compare = () => {
   const handleExportComparison = () => {
     if (data1 && data2 && location1 && location2) {
       exportComparisonCSV(data1, data2, location1.name, location2.name);
-      toast.success(`Comparison data for ${location1.name} and ${location2.name} exported successfully!`);
+      toast.success(t.alerts.exportSuccess.replace('{{type}}', 'Comparison'));
     }
   };
 
@@ -106,9 +108,9 @@ export const Compare = () => {
     return (
       <PageTransition>
         <CompareContainer>
-          <PageTitle>Compare Locations</PageTitle>
+          <PageTitle>{t.compare.title}</PageTitle>
           <EmptyState
-            message="You need at least 2 locations to compare. Add more locations first!"
+            message={t.compare.selectTwoLocations}
             icon="📊"
           />
         </CompareContainer>
@@ -119,13 +121,13 @@ export const Compare = () => {
   return (
     <PageTransition>
       <CompareContainer>
-      <PageTitle>Compare Locations</PageTitle>
+      <PageTitle>{t.compare.title}</PageTitle>
 
       <SelectionCard>
         <CardContent>
           <SelectionGrid>
             <FormGroup>
-              <Label>First Location</Label>
+              <Label>{t.compare.selectLocation1}</Label>
               <Select
                 value={location1Id}
                 onChange={(e) => {
@@ -133,7 +135,7 @@ export const Compare = () => {
                   setShowComparison(false);
                 }}
               >
-                <option value="">Select location...</option>
+                <option value="">{t.compare.selectLocation1}...</option>
                 {locations.map((location) => (
                   <option
                     key={location.id}
@@ -147,7 +149,7 @@ export const Compare = () => {
             </FormGroup>
 
             <FormGroup>
-              <Label>Second Location</Label>
+              <Label>{t.compare.selectLocation2}</Label>
               <Select
                 value={location2Id}
                 onChange={(e) => {
@@ -155,7 +157,7 @@ export const Compare = () => {
                   setShowComparison(false);
                 }}
               >
-                <option value="">Select location...</option>
+                <option value="">{t.compare.selectLocation2}...</option>
                 {locations.map((location) => (
                   <option
                     key={location.id}
@@ -174,7 +176,7 @@ export const Compare = () => {
                 disabled={!location1Id || !location2Id || location1Id === location2Id}
                 fullWidth
               >
-                Compare
+                {t.compare.title}
               </Button>
             </FormGroup>
           </SelectionGrid>
@@ -185,7 +187,7 @@ export const Compare = () => {
         <>
           {(loading1 || loading2) && <ChartSkeleton />}
           {!(loading1 || loading2) && (error1 || error2) && (
-            <ErrorMessage message={error1 || error2 || 'Failed to load data'} />
+            <ErrorMessage message={error1 || error2 || t.common.error} />
           )}
           {!(loading1 || loading2) && data1 && data2 && location1 && location2 && (
             <ChartSection>
@@ -201,7 +203,7 @@ export const Compare = () => {
                   variant="outline"
                   onClick={handleExportComparison}
                 >
-                  📥 Export Comparison
+                  📥 {t.compare.title}
                 </Button>
               </ChartActions>
             </ChartSection>

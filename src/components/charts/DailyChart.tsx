@@ -89,8 +89,8 @@ export const DailyChart = ({ data, title = 'Daily Summary' }: DailyChartProps) =
               dataKey="tempMax"
               stroke={theme.colors.error}
               strokeWidth={2}
-              dot={{ r: 4, strokeWidth: 0 }}
-              activeDot={{ r: 7, strokeWidth: 2, stroke: theme.colors.error }}
+              dot={{ r: 4, strokeWidth: 0, fill: theme.colors.error }}
+              activeDot={{ r: 7, strokeWidth: 2, stroke: theme.colors.error, fill: theme.colors.error }}
               animationBegin={0}
               animationDuration={1500}
               animationEasing="ease-in-out"
@@ -102,8 +102,8 @@ export const DailyChart = ({ data, title = 'Daily Summary' }: DailyChartProps) =
               dataKey="tempMin"
               stroke={theme.colors.info}
               strokeWidth={2}
-              dot={{ r: 4, strokeWidth: 0 }}
-              activeDot={{ r: 7, strokeWidth: 2, stroke: theme.colors.info }}
+              dot={{ r: 4, strokeWidth: 0, fill: theme.colors.info }}
+              activeDot={{ r: 7, strokeWidth: 2, stroke: theme.colors.info, fill: theme.colors.info }}
               animationBegin={200}
               animationDuration={1500}
               animationEasing="ease-in-out"
