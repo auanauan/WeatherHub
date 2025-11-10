@@ -133,6 +133,7 @@ export const th: TranslationKeys = {
     deleteConfirm: 'คุณแน่ใจหรือไม่ว่าต้องการลบสถานที่นี้?',
     deleteSuccess: 'ลบสถานที่เรียบร้อยแล้ว',
     addSuccess: 'เพิ่มสถานที่เรียบร้อยแล้ว',
+    updateSuccess: 'อัปเดตสถานที่เรียบร้อยแล้ว',
     coordinates: 'พิกัด',
   },
 

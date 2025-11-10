@@ -131,6 +131,7 @@ export const en = {
     deleteConfirm: 'Are you sure you want to delete this location?',
     deleteSuccess: 'Location deleted successfully',
     addSuccess: 'Location added successfully',
+    updateSuccess: 'Location updated successfully',
     coordinates: 'Coordinates',
   },
 
