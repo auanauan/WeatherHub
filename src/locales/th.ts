@@ -42,6 +42,7 @@ export const th: TranslationKeys = {
     temperature: 'อุณหภูมิ',
     feelsLike: 'รู้สึกเหมือน',
     humidity: 'ความชื้น',
+    wind: 'ลม',
     windSpeed: 'ความเร็วลม',
     precipitation: 'ปริมาณฝน',
     pressure: 'ความกดอากาศ',

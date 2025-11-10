@@ -40,6 +40,7 @@ export const en = {
     temperature: 'Temperature',
     feelsLike: 'Feels like',
     humidity: 'Humidity',
+    wind: 'Wind',
     windSpeed: 'Wind Speed',
     precipitation: 'Precipitation',
     pressure: 'Pressure',

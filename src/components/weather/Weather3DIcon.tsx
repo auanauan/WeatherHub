@@ -15,15 +15,6 @@ const float = keyframes`
   }
 `;
 
-const spin = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
 const pulse = keyframes`
   0%, 100% {
     transform: scale(1);
@@ -188,35 +179,6 @@ const Snowflake = styled.div<{ $size: number; $delay: number; $left: number }>`
     }
     100% {
       transform: translateY(${({ $size }) => $size * 0.5}px) rotate(360deg);
-      opacity: 0;
-    }
-  }
-`;
-
-// Wind Component
-const Wind = styled.div<{ $size: number; $top: number; $delay: number }>`
-  width: ${({ $size }) => $size * 0.4}px;
-  height: ${({ $size }) => $size * 0.03}px;
-  background: linear-gradient(90deg, transparent 0%, #a0aec0 50%, transparent 100%);
-  border-radius: 10px;
-  position: absolute;
-  top: ${({ $top }) => $top}%;
-  left: -20%;
-  opacity: 0.6;
-  animation: windBlow 2s ease-in-out infinite;
-  animation-delay: ${({ $delay }) => $delay}s;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-  @keyframes windBlow {
-    0% {
-      transform: translateX(0);
-      opacity: 0;
-    }
-    50% {
-      opacity: 0.6;
-    }
-    100% {
-      transform: translateX(${({ $size }) => $size * 1.2}px);
       opacity: 0;
     }
   }

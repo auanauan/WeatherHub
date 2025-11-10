@@ -90,7 +90,7 @@ const ComparisonText = styled.div<{ $warmer: boolean }>`
   text-align: center;
   font-size: 0.875rem;
   font-weight: 600;
-  color: ${({ theme, $warmer }) => $warmer ? '#f97316' : '#3b82f6'};
+  color: ${({ $warmer }) => $warmer ? '#f97316' : '#3b82f6'};
   display: flex;
   align-items: center;
   justify-content: center;

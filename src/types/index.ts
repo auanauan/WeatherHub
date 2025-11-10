@@ -12,11 +12,15 @@ export interface WeatherData {
   temperature: number;
   humidity: number;
   windSpeed: number;
+  windDirection?: number;
   precipitation: number;
   weatherCode: number;
   uvIndex?: number;
   sunrise?: string;
   sunset?: string;
+  pressure?: number;
+  visibility?: number;
+  apparentTemperature?: number;
 }
 
 export interface DailySummary {
