@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Card, CardHeader } from '@/components/common/Card';
-import { Skeleton, SkeletonCircle, SkeletonText } from '@/components/common/Skeleton';
+import { Skeleton, SkeletonCircle } from '@/components/common/Skeleton';
 
 const WeatherGrid = styled.div`
   display: grid;

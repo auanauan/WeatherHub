@@ -14,7 +14,6 @@ import { Button } from '@/components/common/Button';
 import { DateRangeSelector, type DateRange } from '@/components/common/DateRangeSelector';
 import { ErrorMessage, EmptyState } from '@/components/common/ErrorMessage';
 import { PageTransition } from '@/components/common/PageTransition';
-import { FadeIn } from '@/components/common/FadeIn';
 import { getLastNDays, getDaysBetween } from '@/utils/date';
 import { exportHourlyWeatherCSV, exportDailySummaryCSV } from '@/utils/csvExport';
 import { toast } from '@/utils/alert';
